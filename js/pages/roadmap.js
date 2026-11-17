@@ -23,7 +23,7 @@ export function renderRoadmap(container) {
     ${notesBoxHtml('roadmap')}
     <div class="goal-banner" id="roadmap-timeline-section">
       <div class="goal-title-row">
-        <div class="goal-icon"><img src="assets/extend-logo.jpg" alt="" /></div>
+        <div class="goal-icon"><img src="assets/mecka-favicon.svg" alt="" /></div>
         <div>
           <div class="section-label">Roadmap</div>
           <div class="goal-big">Roadmap</div>

@@ -1,5 +1,4 @@
-/* Field-marketing content for Extend (AI document processing; customers in finance, health care,
-   real estate and logistics; audience: AI and developer teams). Budgets, costs, meetings and scores
+/* Field-marketing content for Mecka. Events, audiences and team come from the earlier copy of this site. Budgets, costs, meetings and scores
    below are planning estimates to adjust, not quotes. */
 
 /* ---------- Events pages ---------- */
@@ -7,7 +6,7 @@
 export const EVENT_FORMATS = ['Conference', 'Demo Day', 'Founder Dinner', 'Meetup / Talk', 'Hackathon / Build Night'];
 
 const FORMAT_FIELD = { key: 'format', label: 'Format', type: 'select', options: ['', ...EVENT_FORMATS] };
-// Extend's own events are never conferences, so Internal Events has no Conference format (or group).
+// Mecka's own events are never conferences, so Internal Events has no Conference format (or group).
 const INTERNAL_FORMAT_FIELD = { ...FORMAT_FIELD, options: FORMAT_FIELD.options.filter((f) => f !== 'Conference') };
 const CO_HOST_FIELDS = [
   { key: 'coHost', label: 'Co-host', width: 150 },
@@ -186,13 +185,13 @@ function social(id, eventName, date, postingPeriod, channels, teaser, teaserDate
 
 export const SOCIAL_PLAN = [
   social('soc-1', 'GitHub Universe 2026', 'Oct 28–29', 'Oct 21 – Oct 27', 'X, LinkedIn', 'Bring your messiest PDF to our booth: we parse it live in 60 seconds.', 'Oct 14 – Oct 21',
-    '60-second live parse clips; booth timelapse; founder dinner moments', 'Shruthi (Extend), Andrew (personal)'),
+    '60-second live parse clips; booth timelapse; founder dinner moments', 'Shruthi (Mecka), Andrew (personal)'),
   social('soc-2', 'AI Engineer Code Summit 2026', 'Nov 10–12', 'Nov 3 – Nov 9', 'X, LinkedIn, YouTube', 'Talk announcement: document agents in production, plus a "drop a document" kiosk.', 'Oct 27 – Nov 3',
-    'Talk recording; kiosk reactions; build-session demos', 'Devin (Extend), Harvey (speaker)'),
-  social('soc-3', 'AI Dev NYC 2026', 'Nov 30 – Dec 1', 'Nov 23 – Nov 29', 'X, LinkedIn', 'NYC builders: Extend booth + happy hour by Chelsea Piers. RSVP on Luma.', 'Nov 16 – Nov 23',
-    'Booth demos; happy hour photos; one customer quote on video', 'Addison (Extend), Jing (personal)'),
+    'Talk recording; kiosk reactions; build-session demos', 'Devin (Mecka), Harvey (speaker)'),
+  social('soc-3', 'AI Dev NYC 2026', 'Nov 30 – Dec 1', 'Nov 23 – Nov 29', 'X, LinkedIn', 'NYC builders: Mecka booth + happy hour by Chelsea Piers. RSVP on Luma.', 'Nov 16 – Nov 23',
+    'Booth demos; happy hour photos; one customer quote on video', 'Addison (Mecka), Jing (personal)'),
   social('soc-4', 'Raspberry Pi Night (NYC)', '', 'Week before the event', 'X, Instagram, LinkedIn', 'Three hours, forty Raspberry Pis, one hour of demos. And pie.', '1–2 weeks before the event',
-    'Build timelapse; demo highlight reel; co-host shout-out with Betaworks', 'Sydney (Extend), co-host account'),
+    'Build timelapse; demo highlight reel; co-host shout-out with Betaworks', 'Sydney (Mecka), co-host account'),
 ];
 
 /* ---------- Roadmap (opened from the header target) ---------- */
@@ -250,7 +249,7 @@ const kr = (id, title, target, deadline, assigneeIds) => ({ id, title, current: 
 
 export const ROADMAP_OKRS = [
   {
-    id: 'okr-company', objective: 'Make every startup know and think of Extend', teamId: null,
+    id: 'okr-company', objective: 'Make every startup know and think of Mecka', teamId: null,
     keyResults: [
       kr('kr-co-1', 'Meetings booked from events', 150, '2026-12-31', []),
       kr('kr-co-2', 'Product signups from events', 1000, '2026-12-31', []),

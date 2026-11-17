@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "extend-field-marketing",
+      "name": "mecka-field-marketing",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["dev-server.py", "8125"],
-      "port": 8125
+      "runtimeArgs": ["dev-server.py", "8135"],
+      "port": 8135
     }
   ]
 }

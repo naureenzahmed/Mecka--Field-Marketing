@@ -360,7 +360,7 @@ export const TEAMS = [
   { id: 'team-d', name: 'Conference D', color: '#f2994a' },
 ];
 
-// Extend team, dealt round-robin across the conferences.
+// Mecka team, dealt round-robin across the conferences.
 const TEAM_NAMES = [
   'Andrew', 'Bo', 'Jing', 'Sydney', 'Sophia', 'Victor', 'Scott', 'Sasha', 'James', 'Harvey', 'Addison',
   'Mike', 'Shruthi', 'Devin', 'Matthew', 'Aiden', 'Joseph', 'Jack', 'Joon', 'Veerpartap', 'Richard',

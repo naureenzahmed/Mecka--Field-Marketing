@@ -2,7 +2,7 @@ import { EXTERNAL_EVENT_FORMATS, REMOVED_INTERNAL_EVENT_IDS, HEAD_OF_CONTENT, NO
 import { DEFAULT_DATA } from './defaultData.js';
 import { seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies, addPartnerAdditions, partnershipSection, applyPartnerHQ, applyPartnerPlacements, PARTNERSHIP_OTHERS_ID, DROPPED_SECTIONS, REMOVED_PARTNERS, ESTIMATES_NOTE } from './seed.js';
 
-const STORAGE_KEY = 'extendFieldMarketingData.v1';
+const STORAGE_KEY = 'meckaFieldMarketingData.v1';
 
 const SCHEMA_KEYS = {
   events: ['eventsNyc', 'eventsSf'],
@@ -226,7 +226,7 @@ function load() {
         stored.partnershipsVersion = fresh.partnershipsVersion;
         changed = true;
       }
-      // peopleVersion 1: teams become Conference A-D and people become the Extend team. Ids p1-p12 are
+      // peopleVersion 1: teams become Conference A-D and people become the Mecka team. Ids p1-p12 are
       // kept, so tasks and key results stay assigned (now to the person with that id).
       if ((stored.peopleVersion || 0) < fresh.peopleVersion) {
         stored.teams = fresh.teams;

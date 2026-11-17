@@ -73,7 +73,7 @@ function renderHeader(route) {
   header.innerHTML = `
     <div class="header-left">
       <div class="wordmark">
-        <img src="assets/extend-logo.jpg" alt="" /><span class="wordmark-text">Extend</span>
+        <img src="assets/mecka-logo.svg" alt="Mecka" />
       </div>
       <nav class="nav-tabs">
         ${Object.entries(PAGES).filter(([, p]) => !p.hidden).map(([key, p]) => `

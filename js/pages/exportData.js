@@ -19,10 +19,10 @@ export function renderExport(container) {
   const status = document.getElementById('export-status');
   document.getElementById('export-download').addEventListener('click', () => {
     const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
-    const a = Object.assign(document.createElement('a'), { href: url, download: 'extend-site-data.json' });
+    const a = Object.assign(document.createElement('a'), { href: url, download: 'mecka-site-data.json' });
     a.click();
     URL.revokeObjectURL(url);
-    status.textContent = 'Downloaded extend-site-data.json.';
+    status.textContent = 'Downloaded mecka-site-data.json.';
   });
   document.getElementById('export-copy').addEventListener('click', async () => {
     try {

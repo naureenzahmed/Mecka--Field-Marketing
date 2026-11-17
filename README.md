@@ -1,4 +1,4 @@
-# Extend Field Marketing
+# Mecka Field Marketing
 
 Field marketing workspace: documentation, lead lists, external conferences, and NYC / SF events.
 

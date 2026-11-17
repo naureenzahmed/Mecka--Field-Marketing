@@ -12,7 +12,7 @@ export function renderCover(container, pages) {
     }));
 
   container.innerHTML = `
-    <div class="page-title">Extend Field Marketing</div>
+    <div class="page-title">Mecka Field Marketing</div>
     <div class="section-desc" style="margin-top:-14px; margin-bottom: 20px;">Jump to any page or section below.</div>
     <div class="cover-grid">
       ${manifest.map((p) => `
