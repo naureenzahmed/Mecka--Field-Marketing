@@ -73,21 +73,12 @@ export function rerender() {
 }
 
 function renderHeader(route) {
-  const data = getData();
   const header = document.getElementById('app-header');
-  const pct = data.companyGoal.target ? Math.round((data.companyGoal.current / data.companyGoal.target) * 100) : 0;
 
-  // Top row: logo and the target. Below it, one folder tab per page; the open page's tab joins the page.
+  // Top row: the logo. Below it, one folder tab per page; the open page's tab joins the page.
   header.innerHTML = `
     <div class="header-top">
       <a class="wordmark" href="#/home" title="Home"><img src="assets/mecka-logo.svg" alt="Mecka" /></a>
-      <a class="header-goal ${route === 'roadmap' ? 'active' : ''}" id="header-goal" href="#/roadmap" title="Open roadmap">
-        <div>
-          <div class="goal-sub">${escapeAttr(data.companyGoal.title)}</div>
-          <div class="goal-value">${data.companyGoal.current}${data.companyGoal.unit} <span class="goal-sub">/ ${data.companyGoal.target}${data.companyGoal.unit}</span></div>
-        </div>
-        <span class="pill">${pct}%</span>
-      </a>
     </div>
     <nav class="folder-tabs" aria-label="Pages">
       ${Object.entries(PAGES).filter(([, p]) => !p.hidden).map(([key, p]) => `
@@ -110,10 +101,6 @@ export function editCompanyGoal() {
   if (!Number.isNaN(target)) data.companyGoal.target = target;
   commit();
   rerender();
-}
-
-function escapeAttr(s) {
-  return String(s ?? '').replace(/"/g, '&quot;');
 }
 
 window.addEventListener('hashchange', rerender);
