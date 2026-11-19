@@ -16,6 +16,18 @@ export const HOME_WHY = [
   'Partnerships take advantage of borrowed trust from the large companies in the ecosystem. This will be necessary as we build up the Mecka brand, so we can skip the cringy part and go straight to being a well-perceived company in the research, physical AI and startup world.',
 ].join('\n\n');
 
+// Default notes at the top of these pages (they fill any empty notes box, and stay editable).
+const eventsNote = (place, market) => `We host events in ${place} to capture the ${market} market for sales, but more importantly to build a strong brand name so we can recruit the best talent.`;
+export const DEFAULT_PAGE_NOTES = {
+  documentation: 'This page holds all of the documentation: every link, drive, spreadsheet and piece of software, so we can keep track of everything.',
+  leadLists: 'Lead Lists track every sales lead with its source and revenue, so we have a better idea of what is working for sales and what is not, and what to invest in.',
+  eventsNyc: eventsNote('New York', 'New York'),
+  eventsSf: eventsNote('San Francisco', 'San Francisco'),
+  eventsAsia: eventsNote('Asia', 'Asian'),
+  partnerships: 'Partnerships let us borrow credibility from established companies, so we can build a reputable name quickly and be associated with the top companies from day one.',
+  socialPlan: 'Social & Content tracks what goes on our social media pages, so we cover and make the most of all our efforts in events and in marketing as a whole.',
+};
+
 // Same columns as the ElevenLabs Inbound Leads table, with "User Name" as "Lead Name".
 const YES_NO_OPTIONS = ['', 'Yes', 'No'];
 
@@ -479,15 +491,15 @@ export function seedData() {
     talentPipeline: seedTalentPipeline(),
     home: { why: HOME_WHY },
     pageNotes: {
-      documentation: '',
-      partnerships: '',
-      leadLists: '',
+      documentation: DEFAULT_PAGE_NOTES.documentation,
+      partnerships: DEFAULT_PAGE_NOTES.partnerships,
+      leadLists: DEFAULT_PAGE_NOTES.leadLists,
       externalConferences: ESTIMATES_NOTE,
-      eventsNyc: '',
-      eventsSf: '',
-      eventsAsia: '',
+      eventsNyc: DEFAULT_PAGE_NOTES.eventsNyc,
+      eventsSf: DEFAULT_PAGE_NOTES.eventsSf,
+      eventsAsia: DEFAULT_PAGE_NOTES.eventsAsia,
       roadmap: '',
-      socialPlan: '',
+      socialPlan: DEFAULT_PAGE_NOTES.socialPlan,
       talentPipeline: TALENT_PIPELINE_NOTE,
     },
   };

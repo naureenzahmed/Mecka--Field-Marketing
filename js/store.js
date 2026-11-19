@@ -1,6 +1,6 @@
 import { EXTERNAL_EVENT_FORMATS, REMOVED_INTERNAL_EVENT_IDS, HEAD_OF_CONTENT, NON_TECHNICAL, EXTEND_ROWS } from './fieldMarketing.js';
 import { DEFAULT_DATA } from './defaultData.js';
-import { HOME_WHY, seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies, addPartnerAdditions, partnershipSection, applyPartnerHQ, applyPartnerPlacements, PARTNERSHIP_OTHERS_ID, DROPPED_SECTIONS, REMOVED_PARTNERS, ESTIMATES_NOTE } from './seed.js';
+import { HOME_WHY, DEFAULT_PAGE_NOTES, seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies, addPartnerAdditions, partnershipSection, applyPartnerHQ, applyPartnerPlacements, PARTNERSHIP_OTHERS_ID, DROPPED_SECTIONS, REMOVED_PARTNERS, ESTIMATES_NOTE } from './seed.js';
 
 const STORAGE_KEY = 'meckaFieldMarketingData.v1';
 
@@ -340,6 +340,10 @@ function load() {
       }
       for (const key of Object.keys(fresh.pageNotes)) {
         if (!(key in stored.pageNotes)) { stored.pageNotes[key] = fresh.pageNotes[key]; changed = true; }
+      }
+      // Empty notes boxes on these pages get their default note (anything typed there stays).
+      for (const [key, note] of Object.entries(DEFAULT_PAGE_NOTES)) {
+        if (!stored.pageNotes[key]) { stored.pageNotes[key] = note; changed = true; }
       }
       // An empty "Why I Built This" box on Home gets the default text (anything typed there stays).
       if (!stored.home?.why) { stored.home = { ...stored.home, why: HOME_WHY }; changed = true; }
