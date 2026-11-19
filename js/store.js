@@ -5,7 +5,7 @@ import { seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies
 const STORAGE_KEY = 'meckaFieldMarketingData.v1';
 
 const SCHEMA_KEYS = {
-  events: ['eventsNyc', 'eventsSf'],
+  events: ['eventsNyc', 'eventsSf', 'eventsAsia'],
   conferences: ['externalConferences'],
   leads: ['leadLists'],
 };

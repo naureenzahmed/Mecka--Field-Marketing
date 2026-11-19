@@ -41,3 +41,36 @@ export const SF_EXTERNAL_EVENTS = [
   importedEvent('sf-rob-9', 'Monthly Robotics & AI Meetup (Frontier Tower)', 'Monthly; next date TBA', '',
     'Robotics and AI builders with live demos at Frontier Tower, San Francisco.', 'https://luma.com/monthly-robotics-ai-meetup'),
 ];
+
+/* Asia: Hong Kong, Shenzhen, Beijing, Bangkok and Singapore. Researched Nov 19, 2026. Listings found only on
+   call-for-papers aggregators were left out; "confirm" marks dates not yet on the organizer's own site. */
+function asiaEvent(id, city, eventName, date, expectedAttendees, targetAudience, lumaLink = '') {
+  return { ...importedEvent(id, eventName, date, expectedAttendees, targetAudience, lumaLink), city };
+}
+
+export const ASIA_EXTERNAL_EVENTS = [
+  asiaEvent('asia-rob-1', 'Singapore', 'AIR 2026 (Artificial Intelligence and Robotics)', 'Dec 7–9', '',
+    'Research conference on embodied intelligence: large-scale learning meets acting in the real world.', 'https://air2026.org/'),
+  asiaEvent('asia-rob-2', 'Bangkok', 'Automation Thailand 2027', 'Mar 10–12, 2027', '',
+    'Industrial automation and robotics trade show at BITEC (Messe Frankfurt): robotics, digital factory, warehouse automation.', 'https://automation-thailand.tw.messefrankfurt.com/thailand/en.html'),
+  asiaEvent('asia-rob-3', 'Hong Kong', 'InnoEX 2027', 'Apr 13–16, 2027 (confirm)', '',
+    'HKTDC innovation fair at the HKCEC. Robotics is one of five focus areas; its RoboPark showed 100+ robots in 2026.', 'https://www.hktdc.com/event/innoex/en'),
+  asiaEvent('asia-rob-4', 'Shenzhen', 'FAIR plus 2027 (Fair of AI and Robotics)', 'Apr 21–23, 2027', '600+ exhibitors',
+    'Robotics supply-chain fair focused on embodied-intelligence hardware and humanoids. Shenzhen Convention & Exhibition Center, Futian.', 'https://fairplus.cn/en/about-fairplus/'),
+  asiaEvent('asia-rob-5', 'Bangkok', 'ICIAI 2027 (Innovation in Artificial Intelligence)', 'Apr 26–29, 2027', '',
+    'Academic AI conference with robotics, mechatronics and control tracks. Papers due Dec 10, 2026.', 'https://iciai.org/'),
+  asiaEvent('asia-rob-6', 'Singapore', 'Asia Tech x Singapore 2027', 'May 26–28, 2027', '',
+    'ATxEnterprise at Singapore EXPO (ATxSummit is invite-only). The 2026 edition announced robotics partnerships (FieldAI, Unitree) and a physical AI testbed.', 'https://asiatechxsg.com/'),
+  asiaEvent('asia-rob-7', 'Shenzhen', 'Shenzhen International Robot Exhibition', 'Jun 16–18, 2027 (confirm)', '',
+    'Mainly service robots, at Shenzhen World Exhibition & Convention Center.'),
+  asiaEvent('asia-rob-8', 'Bangkok', 'RSAE 2027 (Robotics Systems and Automation Engineering)', 'Jul 8–10, 2027 (confirm)', '',
+    'Academic robotics conference sponsored by Chulalongkorn University.'),
+  asiaEvent('asia-rob-9', 'Hong Kong', 'ACIRS 2027 (Intelligent Robotic Systems)', 'Jul 23–25, 2027', '',
+    'Academic conference on intelligent robotic systems. Full papers due Mar 10, 2027.'),
+  asiaEvent('asia-rob-10', 'Beijing', 'World Robot Conference 2027', 'Aug 18–22, 2027 (confirm)', '',
+    'China’s largest robotics event, with a humanoid expo floor, forums and exhibitions.'),
+  asiaEvent('asia-rob-11', 'Beijing', 'World Humanoid Robot Games 2027', 'Aug 2027 (dates TBA)', '',
+    'Humanoid robot competition; the 2026 edition ran Aug 22–26. Good for meeting humanoid makers.'),
+  asiaEvent('asia-rob-12', 'Shenzhen', 'IOTE EXPO 2027 (embodied AI zone)', 'Sep 1–3, 2027', '',
+    'IoT expo whose AI zone (AGIC) covers embodied AI and humanoid robots. Shenzhen World Exhibition & Convention Center.', 'https://eng.iotexpo.com.cn/'),
+];

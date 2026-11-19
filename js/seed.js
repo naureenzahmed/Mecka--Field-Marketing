@@ -1,7 +1,8 @@
 import { seedTalentPipeline, TALENT_PIPELINE_NOTE } from './talentPipelineData.js';
-import { NYC_EXTERNAL_EVENTS, SF_EXTERNAL_EVENTS } from './eventImports.js';
+import { NYC_EXTERNAL_EVENTS, SF_EXTERNAL_EVENTS, ASIA_EXTERNAL_EVENTS } from './eventImports.js';
 import {
   EXTERNAL_EVENT_FIELDS, INTERNAL_EVENT_FIELDS, EXTERNAL_EVENT_FORMATS, NYC_INTERNAL_EVENTS, SF_INTERNAL_EVENTS,
+  ASIA_EXTERNAL_EVENT_FIELDS, ASIA_INTERNAL_EVENT_FIELDS, ASIA_INTERNAL_EVENTS,
   eventFunnelMetrics, partnershipFunnelMetrics, NON_TECHNICAL, SCORECARD_FIELDS, SCORECARD_ROWS,
   SOCIAL_FIELDS, SOCIAL_PLAN, COMPANY_GOAL, ROADMAP_INITIATIVES, ROADMAP_TASKS, ROADMAP_MILESTONES, ROADMAP_OKRS,
 } from './fieldMarketing.js';
@@ -43,12 +44,12 @@ function renameSection(pageSections, id, title) {
 }
 
 /* Fills an events page's External and Internal Events sections (each with its own columns). */
-function withEvents(pageSections, external, internal = []) {
+function withEvents(pageSections, external, internal = [], externalFields = EXTERNAL_EVENT_FIELDS, internalFields = INTERNAL_EVENT_FIELDS) {
   const blank = (fields) => Object.fromEntries(fields.filter((f) => f.type !== 'computed').map((f) => [f.key, '']));
-  pageSections[0].fields = EXTERNAL_EVENT_FIELDS;
-  pageSections[0].entries = external.filter((e) => !NON_TECHNICAL.events.includes(e.id)).map((e) => ({ ...blank(EXTERNAL_EVENT_FIELDS), ...e, format: EXTERNAL_EVENT_FORMATS[e.id] || '' }));
-  pageSections[1].fields = INTERNAL_EVENT_FIELDS;
-  pageSections[1].entries = internal.map((e) => ({ ...blank(INTERNAL_EVENT_FIELDS), ...e }));
+  pageSections[0].fields = externalFields;
+  pageSections[0].entries = external.filter((e) => !NON_TECHNICAL.events.includes(e.id)).map((e) => ({ ...blank(externalFields), ...e, format: EXTERNAL_EVENT_FORMATS[e.id] || '' }));
+  pageSections[1].fields = internalFields;
+  pageSections[1].entries = internal.map((e) => ({ ...blank(internalFields), ...e }));
   return pageSections;
 }
 
@@ -407,6 +408,8 @@ export function seedData() {
     partnershipsVersion: 6,
     partnerships: seedPartnerships(),
     eventsSf: withEvents(sections('sf', ['External Events', 'Internal Events'], EXTERNAL_EVENT_FIELDS), SF_EXTERNAL_EVENTS, SF_INTERNAL_EVENTS),
+    eventsAsia: withEvents(sections('asia', ['External Events', 'Internal Events'], ASIA_EXTERNAL_EVENT_FIELDS), ASIA_EXTERNAL_EVENTS, ASIA_INTERNAL_EVENTS, ASIA_EXTERNAL_EVENT_FIELDS, ASIA_INTERNAL_EVENT_FIELDS),
+    eventsAsiaFunnel: seedEventsFunnel('asia'),
     talentPipeline: seedTalentPipeline(),
     pageNotes: {
       documentation: '',
@@ -415,6 +418,7 @@ export function seedData() {
       externalConferences: ESTIMATES_NOTE,
       eventsNyc: '',
       eventsSf: '',
+      eventsAsia: '',
       roadmap: '',
       socialPlan: '',
       talentPipeline: TALENT_PIPELINE_NOTE,

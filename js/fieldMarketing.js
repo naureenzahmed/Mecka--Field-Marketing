@@ -50,6 +50,12 @@ export const INTERNAL_EVENT_FIELDS = [
   { key: 'checklistLink', label: 'Event Checklist Link' },
 ];
 
+// Events Asia has a City column after the event name, for the five cities on that page.
+export const ASIA_CITIES = ['Hong Kong', 'Shenzhen', 'Beijing', 'Bangkok', 'Singapore'];
+const CITY_FIELD = { key: 'city', label: 'City', type: 'select', options: ['', ...ASIA_CITIES, 'Other'] };
+export const ASIA_EXTERNAL_EVENT_FIELDS = [EXTERNAL_EVENT_FIELDS[0], CITY_FIELD, ...EXTERNAL_EVENT_FIELDS.slice(1)];
+export const ASIA_INTERNAL_EVENT_FIELDS = [INTERNAL_EVENT_FIELDS[0], CITY_FIELD, ...INTERNAL_EVENT_FIELDS.slice(1)];
+
 // Format for each external event.
 export const EXTERNAL_EVENT_FORMATS = {
   'nyc-rob-1': 'Meetup / Talk', 'nyc-rob-2': 'Meetup / Talk', 'nyc-rob-3': 'Meetup / Talk', 'nyc-rob-4': 'Conference',
@@ -57,6 +63,9 @@ export const EXTERNAL_EVENT_FORMATS = {
   'sf-rob-1': 'Conference', 'sf-rob-2': 'Meetup / Talk', 'sf-rob-3': 'Conference', 'sf-rob-4': 'Conference',
   'sf-rob-5': 'Conference', 'sf-rob-6': 'Conference', 'sf-rob-7': 'Conference', 'sf-rob-8': 'Meetup / Talk',
   'sf-rob-9': 'Meetup / Talk',
+  'asia-rob-1': 'Conference', 'asia-rob-2': 'Conference', 'asia-rob-3': 'Conference', 'asia-rob-4': 'Conference',
+  'asia-rob-5': 'Conference', 'asia-rob-6': 'Conference', 'asia-rob-7': 'Conference', 'asia-rob-8': 'Conference',
+  'asia-rob-9': 'Conference', 'asia-rob-10': 'Conference', 'asia-rob-11': 'Demo Day', 'asia-rob-12': 'Conference',
 };
 
 // Rows from the Extend copy (developer and web conferences), replaced in fieldMarketingVersion 10.
@@ -86,6 +95,14 @@ export const SF_INTERNAL_EVENTS = [
 export const NYC_INTERNAL_EVENTS = [
   idea('nyc-int-2', 'Raspberry Pi Night', 'Builders night: 3 hours building with Raspberry Pis (about $40 per unit on average), 1 hour of demos, 2 hours networking with berry pies.', 'Hackathon / Build Night',
     'Betaworks', 'Builder programming for their studio space', 'Programming / events lead', '$2,500 (40 Pis at ~$40, food, pies)', '40 builders · 15 signups · 4 meetings', 'Builders'),
+];
+
+// Ideas timed around the big Asia events; co-hosts are left for whoever runs Asia to fill in.
+export const ASIA_INTERNAL_EVENTS = [
+  { ...idea('asia-int-1', 'Capture Night Shenzhen', 'Hardware builders try Mecka capture rigs, record a task, and see it replayed on a robot arm.', 'Hackathon / Build Night',
+    '', '', 'Local hardware community or maker space', '$3,000 (venue, food, rigs on loan)', '40 builders · 10 data-partner leads · 4 meetings', 'Robotics and hardware engineers', ''), city: 'Shenzhen', date: 'Apr 2027, alongside FAIR plus' },
+  { ...idea('asia-int-2', 'Humanoid Founders Dinner Beijing', 'Dinner for humanoid-robot founders and research leads during the World Robot Conference.', 'Founder Dinner',
+    '', '', 'Investor or partner with a Beijing network', '$4,000 (private room for 16)', '16 guests · 6 meetings', 'Humanoid robot founders and heads of research', ''), city: 'Beijing', date: 'Aug 2027, during WRC' },
 ];
 
 // Internal event ids that were removed from the plan.
