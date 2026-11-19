@@ -1,6 +1,6 @@
 import { EXTERNAL_EVENT_FORMATS, REMOVED_INTERNAL_EVENT_IDS, HEAD_OF_CONTENT, NON_TECHNICAL, EXTEND_ROWS } from './fieldMarketing.js';
 import { DEFAULT_DATA } from './defaultData.js';
-import { seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies, addPartnerAdditions, partnershipSection, applyPartnerHQ, applyPartnerPlacements, PARTNERSHIP_OTHERS_ID, DROPPED_SECTIONS, REMOVED_PARTNERS, ESTIMATES_NOTE } from './seed.js';
+import { HOME_WHY, seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies, addPartnerAdditions, partnershipSection, applyPartnerHQ, applyPartnerPlacements, PARTNERSHIP_OTHERS_ID, DROPPED_SECTIONS, REMOVED_PARTNERS, ESTIMATES_NOTE } from './seed.js';
 
 const STORAGE_KEY = 'meckaFieldMarketingData.v1';
 
@@ -158,6 +158,8 @@ function load() {
       //   Nordisk move to Others with an industry label); Harvey labelled Law; Ramp also listed under
       //   Banking; Dialogue added to Health Care; MongoDB added to Dev Tools; Finance and Banking merge
       //   into one Finance & Banking section.
+      //   partnershipsVersion 7: the page's companies are replaced by NVIDIA, AMD, the AI labs, robotics
+      //   startups and friends (see PARTNER_GROUPS); the old sections are kept in retiredPartnerships.
       const partnershipsVersion = stored.partnershipsVersion || 0;
       if (partnershipsVersion < fresh.partnershipsVersion) {
         let byCity = stored.partnerships;
@@ -222,6 +224,11 @@ function load() {
           }
           applyPartnerPlacements(sections);
           applyPartnerHQ(addPartnerAdditions(sections), { onlyBlank: true });
+        }
+        if (partnershipsVersion < 7) {
+          // The page's companies are replaced by a new list; the old sections are kept aside, not shown.
+          stored.retiredPartnerships = stored.partnerships;
+          stored.partnerships = fresh.partnerships;
         }
         stored.partnershipsVersion = fresh.partnershipsVersion;
         changed = true;
@@ -316,6 +323,8 @@ function load() {
       for (const key of Object.keys(fresh.pageNotes)) {
         if (!(key in stored.pageNotes)) { stored.pageNotes[key] = fresh.pageNotes[key]; changed = true; }
       }
+      // An empty "Why I Built This" box on Home gets the default text (anything typed there stays).
+      if (!stored.home?.why) { stored.home = { ...stored.home, why: HOME_WHY }; changed = true; }
       if (changed) save(stored);
       return stored;
     }

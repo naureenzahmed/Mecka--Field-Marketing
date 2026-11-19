@@ -7,6 +7,15 @@ import {
   SOCIAL_FIELDS, SOCIAL_PLAN, COMPANY_GOAL, ROADMAP_INITIATIVES, ROADMAP_TASKS, ROADMAP_MILESTONES, ROADMAP_OKRS,
 } from './fieldMarketing.js';
 
+// Home's "Why I Built This" text. Paragraphs follow the order of the tabs.
+export const HOME_WHY = [
+  'This gives you an overall, generalized idea of how I’m thinking about field marketing, and marketing as a whole, at Mecka, and what I would do in my first two months here.',
+  'Lead Lists track every single lead and its source, so we can see what is bringing us better customers and invest more in those verticals.',
+  'My first priority is External Conferences for customers: setting up a sales funnel that scales as Mecka goes to more and more conferences, so we reach a higher ROI.',
+  'Events in New York, SF and Asia focus on recruitment in these locations, as well as finding new lead sources.',
+  'Partnerships take advantage of borrowed trust from the large companies in the ecosystem. This will be necessary as we build up the Mecka brand, so we can skip the cringy part and go straight to being a well-perceived company in the research, physical AI and startup world.',
+].join('\n\n');
+
 // Same columns as the ElevenLabs Inbound Leads table, with "User Name" as "Lead Name".
 const YES_NO_OPTIONS = ['', 'Yes', 'No'];
 
@@ -348,9 +357,33 @@ export function mergeCityCompanies(byCity) {
   return merged;
 }
 
+/* Partnerships (partnershipsVersion 7): the companies whose borrowed trust helps the Mecka brand, by group.
+   City is the headquarters (public profiles, Nov 2026); blank where it could not be confirmed. */
+export const PARTNER_GROUPS = [
+  ['Compute & Big Tech', [
+    ['NVIDIA', 'Santa Clara, CA'], ['AMD', 'Santa Clara, CA'], ['Google', 'Mountain View, CA'],
+    ['Meta', 'Menlo Park, CA'], ['Microsoft', 'Redmond, WA'],
+  ]],
+  ['AI Research Labs', [
+    ['Google DeepMind', 'London, UK'], ['World Labs', SF], ['AMI Labs', 'Paris, France'],
+    ['Thinking Machines Lab', SF], ['Mila', 'Montreal, Canada'],
+  ]],
+  ['Robotics & Physical AI', [
+    ['Pudu Robotics', 'Shenzhen, China'], ['Antioch', NYC], ['Normal Factory', ''],
+  ]],
+  ['AI & Dev Tools Startups', [
+    ['21st.dev', SF], ['turbopuffer', ''], ['General Intelligence Company', NYC],
+  ]],
+];
+
 function seedPartnerships() {
-  const toCompanies = (names) => names.map((name) => ({ name, links: [] }));
-  return applyPartnerPlacements(applyPartnerHQ(addPartnerAdditions(buildPartnershipSections(mergeCityCompanies({ NYC: toCompanies(PARTNERS.nyc), SF: toCompanies(PARTNERS.sf) })))));
+  return [
+    { id: PARTNERSHIP_UNASSIGNED_ID, title: 'Unassigned', entities: [], metrics: partnershipMetrics() },
+    ...PARTNER_GROUPS.map(([title, companies]) => ({
+      ...partnershipSection(title),
+      entities: companies.map(([name, city]) => ({ name, city, links: [] })),
+    })),
+  ];
 }
 
 /* ---------- Roadmap (opened from the header target) ---------- */
@@ -405,12 +438,13 @@ export function seedData() {
     eventsFunnelVersion: 7,
     eventsNycFunnel: seedEventsFunnel('nyc'),
     eventsSfFunnel: seedEventsFunnel('sf'),
-    partnershipsVersion: 6,
+    partnershipsVersion: 7,
     partnerships: seedPartnerships(),
     eventsSf: withEvents(sections('sf', ['External Events', 'Internal Events'], EXTERNAL_EVENT_FIELDS), SF_EXTERNAL_EVENTS, SF_INTERNAL_EVENTS),
     eventsAsia: withEvents(sections('asia', ['External Events', 'Internal Events'], ASIA_EXTERNAL_EVENT_FIELDS), ASIA_EXTERNAL_EVENTS, ASIA_INTERNAL_EVENTS, ASIA_EXTERNAL_EVENT_FIELDS, ASIA_INTERNAL_EVENT_FIELDS),
     eventsAsiaFunnel: seedEventsFunnel('asia'),
     talentPipeline: seedTalentPipeline(),
+    home: { why: HOME_WHY },
     pageNotes: {
       documentation: '',
       partnerships: '',
