@@ -357,30 +357,63 @@ export function mergeCityCompanies(byCity) {
   return merged;
 }
 
-/* Partnerships (partnershipsVersion 7): the companies whose borrowed trust helps the Mecka brand, by group.
+/* Partnerships (partnershipsVersion 8): companies whose borrowed trust helps the Mecka brand, by group.
    City is the headquarters (public profiles, Nov 2026); blank where it could not be confirmed. */
 export const PARTNER_GROUPS = [
-  ['Compute & Big Tech', [
-    ['NVIDIA', 'Santa Clara, CA'], ['AMD', 'Santa Clara, CA'], ['Google', 'Mountain View, CA'],
-    ['Meta', 'Menlo Park, CA'], ['Microsoft', 'Redmond, WA'],
+  ['Big Tech', [
+    ['Meta', 'Menlo Park, CA'], ['Apple', 'Cupertino, CA'], ['Amazon', 'Seattle, WA'], ['Netflix', 'Los Gatos, CA'],
+    ['Google', 'Mountain View, CA'], ['Microsoft', 'Redmond, WA'],
+  ]],
+  ['Compute & Chips', [
+    ['NVIDIA', 'Santa Clara, CA'], ['AMD', 'Santa Clara, CA'],
   ]],
   ['AI Research Labs', [
     ['Google DeepMind', 'London, UK'], ['World Labs', SF], ['AMI Labs', 'Paris, France'],
     ['Thinking Machines Lab', SF], ['Mila', 'Montreal, Canada'],
   ]],
-  ['Robotics & Physical AI', [
-    ['Pudu Robotics', 'Shenzhen, China'], ['Antioch', NYC], ['Normal Factory', ''],
+  ['Robotics Startups', [
+    ['Antioch', NYC], ['Normal Factory', ''], ['Physical Intelligence', SF], ['Skild AI', 'Pittsburgh, PA'],
+    ['Figure AI', 'San Jose, CA'], ['1X Technologies', 'Palo Alto, CA'], ['Apptronik', 'Austin, TX'],
+    ['Dyna Robotics', 'Redwood City, CA'], ['The Bot Company', SF],
+  ]],
+  ['Robotics', [
+    ['Pudu Robotics', 'Shenzhen, China'], ['Boston Dynamics', 'Waltham, MA'], ['Agility Robotics', 'Salem, OR'],
+    ['Unitree Robotics', 'Hangzhou, China'], ['UBTech Robotics', 'Shenzhen, China'], ['AgiBot', 'Shanghai, China'],
+    ['Universal Robots', 'Odense, Denmark'], ['ABB Robotics', 'Zürich, Switzerland'], ['FANUC', 'Oshino, Japan'],
+  ]],
+  ['Automotive', [
+    ['Tesla', 'Austin, TX'], ['Rivian', 'Irvine, CA'], ['Waymo', 'Mountain View, CA'], ['Zoox', 'Foster City, CA'],
+    ['Toyota Research Institute', 'Los Altos, CA'], ['Hyundai Motor Group (owns Boston Dynamics)', 'Seoul, South Korea'],
+    ['BYD', 'Shenzhen, China'],
+  ]],
+  ['Space', [
+    ['SpaceX', 'Starbase, TX'], ['Blue Origin', 'Kent, WA'], ['Rocket Lab', 'Long Beach, CA'],
+    ['Relativity Space', 'Long Beach, CA'], ['Varda Space Industries', 'El Segundo, CA'], ['Axiom Space', 'Houston, TX'],
+  ]],
+  ['Manufacturing & Factories', [
+    ['Foxconn', 'New Taipei, Taiwan'], ['Siemens', 'Munich, Germany'], ['Hadrian', 'Torrance, CA'],
+    ['Machina Labs', 'Los Angeles, CA'], ['Bright Machines', 'Burlingame, CA'], ['Formic', 'Bolingbrook, IL'],
+    ['Mind Robotics (Rivian spinout)', ''],
   ]],
   ['AI & Dev Tools Startups', [
     ['21st.dev', SF], ['turbopuffer', ''], ['General Intelligence Company', NYC],
   ]],
+  ['Community', [
+    ['Betaworks', NYC], ['Discord', SF], ['Solo Founders', SF], ['Reddit', SF], ['Circle', NYC], ['Skool', 'Los Angeles, CA'],
+  ]],
 ];
+
+// Notes shown under a group's title.
+const PARTNER_GROUP_NOTES = {
+  Community: 'For recruitment: these communities help us reach engineers, researchers and builders to hire, rather than customers.',
+};
 
 function seedPartnerships() {
   return [
     { id: PARTNERSHIP_UNASSIGNED_ID, title: 'Unassigned', entities: [], metrics: partnershipMetrics() },
     ...PARTNER_GROUPS.map(([title, companies]) => ({
       ...partnershipSection(title),
+      ...(PARTNER_GROUP_NOTES[title] ? { note: PARTNER_GROUP_NOTES[title] } : {}),
       entities: companies.map(([name, city]) => ({ name, city, links: [] })),
     })),
   ];
@@ -438,7 +471,7 @@ export function seedData() {
     eventsFunnelVersion: 7,
     eventsNycFunnel: seedEventsFunnel('nyc'),
     eventsSfFunnel: seedEventsFunnel('sf'),
-    partnershipsVersion: 7,
+    partnershipsVersion: 8,
     partnerships: seedPartnerships(),
     eventsSf: withEvents(sections('sf', ['External Events', 'Internal Events'], EXTERNAL_EVENT_FIELDS), SF_EXTERNAL_EVENTS, SF_INTERNAL_EVENTS),
     eventsAsia: withEvents(sections('asia', ['External Events', 'Internal Events'], ASIA_EXTERNAL_EVENT_FIELDS), ASIA_EXTERNAL_EVENTS, ASIA_INTERNAL_EVENTS, ASIA_EXTERNAL_EVENT_FIELDS, ASIA_INTERNAL_EVENT_FIELDS),

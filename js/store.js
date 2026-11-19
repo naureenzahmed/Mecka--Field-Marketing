@@ -160,6 +160,8 @@ function load() {
       //   into one Finance & Banking section.
       //   partnershipsVersion 7: the page's companies are replaced by NVIDIA, AMD, the AI labs, robotics
       //   startups and friends (see PARTNER_GROUPS); the old sections are kept in retiredPartnerships.
+      //   partnershipsVersion 8: Big Tech, Compute & Chips, Robotics Startups, Robotics, Automotive, Space,
+      //   Manufacturing & Factories, and Community (back, for recruitment).
       const partnershipsVersion = stored.partnershipsVersion || 0;
       if (partnershipsVersion < fresh.partnershipsVersion) {
         let byCity = stored.partnerships;
@@ -229,6 +231,22 @@ function load() {
           // The page's companies are replaced by a new list; the old sections are kept aside, not shown.
           stored.retiredPartnerships = stored.partnerships;
           stored.partnerships = fresh.partnerships;
+        }
+        if (partnershipsVersion < 8) {
+          // New groups (Big Tech, robotics, automotive, space, manufacturing, Community). Companies someone
+          // added stay, in their section if it still exists (else Unassigned), and so do weekly numbers.
+          const next = fresh.partnerships;
+          const known = new Set(next.flatMap((s) => s.entities.map((e) => e.name.toLowerCase())));
+          for (const old of stored.partnerships || []) {
+            const target = next.find((s) => s.id === old.id);
+            if (target && target !== old) target.metrics = old.metrics || target.metrics;
+            for (const e of old.entities || []) {
+              if (known.has(e.name.toLowerCase())) continue;
+              (target || next[0]).entities.push(e);
+              known.add(e.name.toLowerCase());
+            }
+          }
+          stored.partnerships = next;
         }
         stored.partnershipsVersion = fresh.partnershipsVersion;
         changed = true;
