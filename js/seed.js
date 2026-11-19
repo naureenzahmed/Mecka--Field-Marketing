@@ -1,3 +1,4 @@
+import { seedTalentPipeline, TALENT_PIPELINE_NOTE } from './talentPipelineData.js';
 import { NYC_EXTERNAL_EVENTS, SF_EXTERNAL_EVENTS } from './eventImports.js';
 import {
   EXTERNAL_EVENT_FIELDS, INTERNAL_EVENT_FIELDS, EXTERNAL_EVENT_FORMATS, NYC_INTERNAL_EVENTS, SF_INTERNAL_EVENTS,
@@ -378,7 +379,7 @@ export const REMOVED_PARTNERS = ['Anti Roch', 'Wiz (being acquired by Google)'];
 
 export function seedData() {
   return {
-    fieldMarketingVersion: 9,
+    fieldMarketingVersion: 10,
     companyGoal: { ...COMPANY_GOAL },
     schemaVersions: { events: 3, conferences: 4, leads: 2 },
     peopleVersion: 1,
@@ -406,6 +407,7 @@ export function seedData() {
     partnershipsVersion: 6,
     partnerships: seedPartnerships(),
     eventsSf: withEvents(sections('sf', ['External Events', 'Internal Events'], EXTERNAL_EVENT_FIELDS), SF_EXTERNAL_EVENTS, SF_INTERNAL_EVENTS),
+    talentPipeline: seedTalentPipeline(),
     pageNotes: {
       documentation: '',
       partnerships: '',
@@ -415,6 +417,7 @@ export function seedData() {
       eventsSf: '',
       roadmap: '',
       socialPlan: '',
+      talentPipeline: TALENT_PIPELINE_NOTE,
     },
   };
 }

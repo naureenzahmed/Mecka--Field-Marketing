@@ -1,34 +1,43 @@
-/* External events imported from SF_NYC_Dev_and_Startup_Events_2026.xlsx
-   (New York City and San Francisco tabs). Columns without a source value stay blank. */
+/* External events for Mecka: robotics, humanoids, physical AI and egocentric / computer-vision data
+   in New York City and the San Francisco Bay Area. Researched Nov 19, 2026. "Confirm" means the
+   organizer had not published a firm date yet, or sources disagreed. Blank columns had no source value. */
 
-function importedEvent(id, eventName, date, expectedAttendees, targetAudience) {
-  return { id, eventName, date, lumaLink: '', expectedAttendees, currentAttendees: '', targetAudience, checklistLink: '' };
+function importedEvent(id, eventName, date, expectedAttendees, targetAudience, lumaLink = '') {
+  return { id, eventName, date, lumaLink, expectedAttendees, currentAttendees: '', targetAudience, checklistLink: '' };
 }
 
 export const NYC_EXTERNAL_EVENTS = [
-  importedEvent("nyc-ext-1", "AI Tinkerers NYC – Jev Demo Day", "Oct 7", "n/a", "5-minute live demos from AI builders/practitioners"),
-  importedEvent("nyc-ext-2", "AI Engineer New York 2026", "Oct 12–14", "n/a", "Engineers & technical leaders building production AI in finance"),
-  importedEvent("nyc-ext-3", "AI Tinkerers NYC – Agentic Loops Demo Day", "Oct 21", "n/a", "Keynote + community demos on autonomous agent loops"),
-  importedEvent("nyc-ext-4", "ERA Summer 2026 Demo Day", "Late Oct (TBC – batch runs to Oct 31)", "700", "~15 startups from NYC's largest accelerator pitch to angels & VCs"),
-  importedEvent("nyc-ext-5", "AI Native DevCon New York 2026", "Nov 2–4", "n/a", "AI-native software development"),
-  importedEvent("nyc-ext-6", "Open Source in Finance Forum New York", "Nov 4–5", "n/a", "Open source in financial services (Linux Foundation / FINOS)"),
-  importedEvent("nyc-ext-7", "JSNation US 2026", "Nov 16 in person (Nov 19 remote)", "700", "JavaScript / full-stack engineers; 40 talks, workshops"),
-  importedEvent("nyc-ext-8", "AI Coding Summit NYC", "Nov 16–17 in person (Nov 19 remote)", "n/a", "Coding agents, AI code review, context engineering"),
-  importedEvent("nyc-ext-9", "React Summit US 2026", "Nov 17 in person (Nov 20 remote)", "800", "React / front-end & full-stack engineers"),
-  importedEvent("nyc-ext-10", "AI Dev NYC 2026 (DeepLearning.AI)", "Nov 30 – Dec 1", "2,500", "Hands-on AI engineering conference hosted by Andrew Ng's team; 50+ labs"),
-  importedEvent("nyc-ext-11", "The AI Summit New York", "Dec 9–10", "5,000", "Enterprise/commercial AI; buyers, vendors, startup & investor village"),
-  importedEvent("nyc-ext-12", "Techstars NYC Fall 2026 Demo Day", "Dec 10", "n/a", "Techstars NYC Fall cohort (~10–12 startups) pitches to investors"),
+  importedEvent('nyc-rob-1', 'NY Hardware Meetup Holiday Party', 'Dec 17, 7–10 pm (confirm on Luma)', '',
+    'NYC hardware and robotics builders at Newlab, Brooklyn Navy Yard. Monthly series (the 119th meetup was in Aug 2026).', 'https://luma.com/6fwvkuej'),
+  importedEvent('nyc-rob-2', 'Physical AI Meetup (NYC)', 'Recurring; next date TBA', '',
+    'About 670 builders, researchers and roboticists: VLA models, simulation, synthetic data, digital twins, embodied AI.', 'https://www.meetup.com/physical/'),
+  importedEvent('nyc-rob-3', 'New York Robotics community events', 'Recurring; next date TBA', '',
+    'Nonprofit for NYC robotics and embodied AI. Hosts talks, workshops and NY Tech Week sessions.'),
+  importedEvent('nyc-rob-4', 'Construction Robotics Summit 2027', 'Apr 14, 2027 (confirm)', '',
+    'Construction robotics founders, contractors and investors. The 2026 edition was at Industry City, Brooklyn.', 'https://luma.com/RoboticsSummit2027'),
+  importedEvent('nyc-rob-5', 'Agent Conference 2027 (Physical AI track)', 'May 17–18, 2027', '',
+    'Enterprise AI leaders at the New York Hilton Midtown. Physical AI is one of ten themes.', 'https://www.agentconference.com/'),
+  importedEvent('nyc-rob-6', 'NY Tech Week 2027: robotics and embodied AI sessions', 'Early June 2027 (dates TBA)', '',
+    'New York Robotics hosted robotics and embodied AI talks across Manhattan and Brooklyn during NY Tech Week 2026.'),
 ];
 
 export const SF_EXTERNAL_EVENTS = [
-  importedEvent("sf-ext-1", "SF Tech Week", "Oct 5–11", "n/a", "Week of founder/VC/dev meetups, mixers, demo nights hosted across SF"),
-  importedEvent("sf-ext-2", "a16z speedrun Demo Day (SR007)", "Oct 6", "1,000", "~60–70 speedrun startups pitch (AI, gaming, consumer, XR) to investors"),
-  importedEvent("sf-ext-3", "TechCrunch Disrupt 2026", "Oct 13–15", "10,000", "Startup pitches (Startup Battlefield), founders, VCs, tech leaders; 250+ sessions"),
-  importedEvent("sf-ext-4", "Next.js Conf 2026", "Oct 22 (listings show Oct 22–23)", "1,000", "Vercel's web dev conference: Next.js, React, AI SDK, v0"),
-  importedEvent("sf-ext-5", "GitHub Universe 2026", "Oct 28–29 (invite-only day Oct 27)", "4,000", "GitHub's flagship dev event: Copilot, agentic coding, DevOps, security"),
-  importedEvent("sf-ext-6", "OWASP Global AppSec USA", "Nov 2–6", "800", "Application security engineers, AppSec teams, security researchers"),
-  importedEvent("sf-ext-7", "AI Engineer Code Summit 2026", "Nov 10–12", "1,500", "Coding agents & dev tools; AI engineers, researchers, founders"),
-  importedEvent("sf-ext-8", "Cerebral Valley AI Summit", "Nov 12", "350", "~50% venture-backed AI founders, ~33% investors, plus media/execs"),
-  importedEvent("sf-ext-9", "QCon San Francisco 2026", "Nov 16–18 (+ training Nov 19–20)", "1,500", "Senior engineers, architects, eng leaders; 12 tracks incl. AI engineering"),
-  importedEvent("sf-ext-10", "Microsoft Ignite 2026", "Nov 17–20 (pre-day Nov 16)", "15,000", "IT pros, cloud architects, developers: Azure, Copilot, agents, security"),
+  importedEvent('sf-rob-1', 'Humanoids Summit Silicon Valley 2026', 'Dec 1–2', '',
+    'Teams building humanoid robots, a core buyer group for Mecka’s data. San Mateo County Event Center.', 'https://humanoidssummit.com/silicon-valley-2026'),
+  importedEvent('sf-rob-2', 'Bots, Bevs & Humanoids (Silicon Valley Robotics)', 'Dec 2, 6–8:30 pm', '',
+    'Robotics and physical AI networking in San Francisco, with short talks and demos by sign-up.', 'https://bit.ly/botsbevsdec26'),
+  importedEvent('sf-rob-3', 'IEEE Humanoids 2026', 'Dec 6–9', '1,200+',
+    'Humanoid robotics researchers and companies: talks, demos, competitions and workshops. Santa Clara Convention Center.', 'https://2026.ieee-humanoids.org/'),
+  importedEvent('sf-rob-4', 'HRI 2027 (ACM/IEEE Human-Robot Interaction)', 'Mar 8–12, 2027', '',
+    'Human-robot interaction researchers, in Santa Clara.'),
+  importedEvent('sf-rob-5', 'NVIDIA GTC 2027', 'Mar 15–18, 2027', '',
+    'Large robotics and physical AI track; NVIDIA invested in Mecka’s Series B. San Jose McEnery Convention Center.', 'https://www.nvidia.com/gtc/'),
+  importedEvent('sf-rob-6', 'AUTONOMOUS 2027', 'Apr 13–14, 2027', '1,500+',
+    'Robotics and physical AI founders, engineers and investors at Pier 27, San Francisco.', 'https://autonomousfuture.co/'),
+  importedEvent('sf-rob-7', 'Physical AI Expo North America 2027', 'Jun 16–17, 2027 (confirm)', '',
+    'Trade show for scaling robotics and autonomous systems, at San Jose McEnery Convention Center.'),
+  importedEvent('sf-rob-8', 'SF Hardware Meetup', 'Monthly; next date TBA', '',
+    'Monthly hardware and robotics demo night with a 2-minute open-mic pitch.'),
+  importedEvent('sf-rob-9', 'Monthly Robotics & AI Meetup (Frontier Tower)', 'Monthly; next date TBA', '',
+    'Robotics and AI builders with live demos at Frontier Tower, San Francisco.', 'https://luma.com/monthly-robotics-ai-meetup'),
 ];

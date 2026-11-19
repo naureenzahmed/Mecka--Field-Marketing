@@ -615,13 +615,44 @@ h1, h2, h3, .page-title { font-family: 'Schibsted Grotesk', 'Inter', sans-serif;
   .folder-tab.active { padding-top: 9px; }
 }
 
-/* ---------- Home: About and Why I Built This ---------- */
+/* ---------- Home: Why I Built This ---------- */
 .home-about { margin-bottom: 14px; }
-.home-about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-@media (max-width: 900px) { .home-about-grid { grid-template-columns: 1fr; } }
-.home-sub-title { font-size: 13px; font-weight: 600; margin-top: 8px; }
 .home-about .notes-box { min-height: 110px; resize: none; overflow: hidden; line-height: 1.55; }
 .cover-notes {
   min-height: 0; max-height: 96px; overflow-y: auto; margin: 0 0 10px; padding: 8px 10px;
   font-size: 12px; field-sizing: content;
 }
+
+/* ---------- Talent Pipeline (from the Office Manager site) ---------- */
+.doc-fields-table td:has(.cell-textarea) { white-space: normal; width: 50%; }
+.cell-textarea {
+  min-width: 360px; font-family: inherit; line-height: 1.5; resize: vertical; field-sizing: content; display: block;
+}
+.board-link { display: flex; align-items: center; gap: 4px; }
+.board-link .cell-input { min-width: 170px; }
+.board-open { font-size: 14px; color: var(--accent); text-decoration: none; padding: 2px 4px; border-radius: 4px; }
+.board-open:hover { background: var(--bg-raised-2); }
+.board-open.hidden { visibility: hidden; }
+.table-group + .table-group { margin-top: 18px; }
+.table-group-head { display: flex; align-items: center; justify-content: space-between; margin: 6px 0 4px; }
+.table-group-head h5 { margin: 0; font-size: 13px; font-weight: 700; }
+.event-phase-count { font-weight: 500; letter-spacing: 0; text-transform: none; margin-left: 6px; color: var(--text-faint); }
+
+/* School Partnerships table */
+#rec-schools .doc-fields-table td:has(.cell-textarea) { width: auto; }
+#rec-schools .cell-textarea { min-width: 210px; }
+#rec-schools td:first-child .cell-input { min-width: 170px; }
+#rec-schools td:nth-child(2) .cell-input { min-width: 110px; width: 115px; }
+
+/* Event Attendance conferences table */
+#rec-attendance .doc-fields-table td:has(.cell-textarea) { width: auto; }
+#rec-attendance .cell-textarea { min-width: 120px; }
+#rec-attendance td:nth-child(6) .cell-textarea { min-width: 200px; }
+#rec-attendance td:nth-child(3) .cell-input { min-width: 95px; width: 100px; }
+#rec-attendance td:nth-child(4) .cell-input { min-width: 128px; width: 128px; }
+#rec-attendance .board-link .cell-input { min-width: 90px; width: 100px; }
+#rec-attendance .doc-fields-table th, #rec-attendance .doc-fields-table td { padding-left: 4px; padding-right: 4px; }
+
+/* Tech Stack boxes are all the same size within each column */
+#rec-tech-stack .cell-textarea { field-sizing: fixed; height: 102px; resize: none; overflow-y: auto; }
+#rec-tech-stack td { vertical-align: top; }

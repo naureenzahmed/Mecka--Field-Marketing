@@ -9,6 +9,7 @@ import { renderExternalConferences } from './pages/externalConferences.js';
 import { renderRoadmap } from './pages/roadmap.js';
 import { renderPartnerships } from './pages/partnerships.js';
 import { renderExport } from './pages/exportData.js';
+import { renderTalentPipeline, TALENT_PIPELINE_TITLE } from './pages/talentPipeline.js';
 
 const HOUSE_ICON = '<svg class="tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.2 10 3.5l7 5.7"/><path d="M5 8v8.5h3.8v-4.6h2.4v4.6H15V8"/></svg>';
 const FOLDER_ICON = '<svg class="tab-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.5 3.5A1.5 1.5 0 0 1 3 2h3.2c.4 0 .78.16 1.06.44L8.4 3.6H13A1.5 1.5 0 0 1 14.5 5.1V12.5A1.5 1.5 0 0 1 13 14H3a1.5 1.5 0 0 1-1.5-1.5v-9Z"/></svg>';
@@ -35,6 +36,7 @@ const PAGES = {
   eventsSf: { label: 'Events SF', dataKey: 'eventsSf', extraDataKey: 'eventsSfFunnel', render: tablePage('eventsSf', 'Events SF', EXTERNAL_EVENT_FIELDS, 'Add event', { showEmptyTable: true, trackerKey: 'eventsSfFunnel', groupBy: BY_FORMAT }) },
   partnerships: { label: 'Partnerships', dataKey: 'partnerships', render: (c) => renderPartnerships(c, { title: 'Partnerships' }) },
   socialPlan: { label: 'Social & Content', dataKey: 'socialPlan', render: tablePage('socialPlan', 'Social & Content', SOCIAL_FIELDS, 'Add event', { showEmptyTable: true }) },
+  talentPipeline: { label: TALENT_PIPELINE_TITLE, dataKey: 'talentPipeline', render: renderTalentPipeline },
   // Not in the nav: opened by clicking the target in the header.
   roadmap: { label: 'Roadmap', hidden: true, render: renderRoadmap },
   // Not in the nav: downloads this browser's data to become the first-visit default.

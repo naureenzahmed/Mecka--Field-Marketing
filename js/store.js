@@ -1,4 +1,4 @@
-import { EXTERNAL_EVENT_FORMATS, REMOVED_INTERNAL_EVENT_IDS, HEAD_OF_CONTENT, NON_TECHNICAL } from './fieldMarketing.js';
+import { EXTERNAL_EVENT_FORMATS, REMOVED_INTERNAL_EVENT_IDS, HEAD_OF_CONTENT, NON_TECHNICAL, EXTEND_ROWS } from './fieldMarketing.js';
 import { DEFAULT_DATA } from './defaultData.js';
 import { seedData, seedInspiration, buildPartnershipSections, mergeCityCompanies, addPartnerAdditions, partnershipSection, applyPartnerHQ, applyPartnerPlacements, PARTNERSHIP_OTHERS_ID, DROPPED_SECTIONS, REMOVED_PARTNERS, ESTIMATES_NOTE } from './seed.js';
 
@@ -247,6 +247,9 @@ function load() {
       //   numbers are estimates.
       //   fieldMarketingVersion 9: the planned conferences come off External Conferences (kept aside in
       //   retiredConferences); only the scorecard remains.
+      //   fieldMarketingVersion 10: every conference is about robotics, physical AI or egocentric data. The
+      //   Extend copy's developer conferences give way to new ones on the events pages, scorecard, social plan
+      //   and roadmap; rows the user added stay.
       const fmVersion = stored.fieldMarketingVersion || 0;
       if (fmVersion < fresh.fieldMarketingVersion) {
         if (fmVersion < 1) upgradeToFieldMarketing(stored, fresh);
@@ -302,6 +305,7 @@ function load() {
           stored.retiredConferences = [...(stored.retiredConferences || []), ...stored.externalConferences];
           stored.externalConferences = [];
         }
+        if (fmVersion < 10) useRoboticsConferences(stored, fresh);
         stored.fieldMarketingVersion = fresh.fieldMarketingVersion;
         changed = true;
       }
@@ -330,6 +334,29 @@ function isRecruitingMetrics(section) {
 
 function isPlaceholderTask(t) {
   return /^Task \d+$/.test(t.title) && /^Example task description/.test(t.description || '');
+}
+
+// Swaps the Extend copy's rows for the seed's robotics rows, keeping rows the user added.
+function useRoboticsConferences(stored, fresh) {
+  const isOld = (rule) => (row) => (rule instanceof RegExp ? rule.test(row.id) : rule.includes(row.id));
+  const swapRows = (rows, rule, freshRows) => {
+    const kept = (rows || []).filter((r) => !isOld(rule)(r));
+    const ids = new Set(kept.map((r) => r.id));
+    return [...freshRows.filter((r) => !ids.has(r.id)), ...kept];
+  };
+  for (const key of ['eventsNyc', 'eventsSf']) {
+    const section = (stored[key] || []).find((s) => s.id.endsWith('-external-events')) || stored[key]?.[0];
+    if (section) section.entries = swapRows(section.entries, EXTEND_ROWS.events, fresh[key][0].entries);
+  }
+  (stored.conferenceScorecard || []).forEach((s, i) => { s.entries = swapRows(s.entries, EXTEND_ROWS.scorecard, fresh.conferenceScorecard[i]?.entries || []); });
+  (stored.socialPlan || []).forEach((s, i) => {
+    // New rows go first; the user's own rows (and Raspberry Pi Night) follow in their saved order.
+    s.entries = swapRows(s.entries, EXTEND_ROWS.social, (fresh.socialPlan[i]?.entries || []).filter((r) => !s.entries.some((e) => e.id === r.id)));
+  });
+  stored.tasks = (stored.tasks || []).map((t) => (EXTEND_ROWS.tasks.includes(t.id) ? fresh.tasks.find((f) => f.id === t.id) || t : t));
+  stored.milestones = swapRows(stored.milestones, EXTEND_ROWS.milestones, fresh.milestones);
+  const kr = (stored.okrs || []).flatMap((o) => o.keyResults || []).find((k) => k.id === 'kr-1-1');
+  if (kr && kr.deadline === '2026-12-01') kr.deadline = '2027-04-14';
 }
 
 function removeNonTechnical(stored) {

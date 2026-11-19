@@ -1,4 +1,5 @@
-/* Field-marketing content for Mecka. Events, audiences and team come from the earlier copy of this site. Budgets, costs, meetings and scores
+/* Field-marketing content for Mecka. Every conference and external event is about robotics, physical AI or
+   egocentric data (see eventImports.js). Budgets, costs, meetings and scores
    below are planning estimates to adjust, not quotes. */
 
 /* ---------- Events pages ---------- */
@@ -49,14 +50,22 @@ export const INTERNAL_EVENT_FIELDS = [
   { key: 'checklistLink', label: 'Event Checklist Link' },
 ];
 
-// Format for each imported external event, from the spreadsheet's Type column.
+// Format for each external event.
 export const EXTERNAL_EVENT_FORMATS = {
-  'nyc-ext-1': 'Meetup / Talk', 'nyc-ext-2': 'Conference', 'nyc-ext-3': 'Meetup / Talk', 'nyc-ext-4': 'Demo Day',
-  'nyc-ext-5': 'Conference', 'nyc-ext-6': 'Conference', 'nyc-ext-7': 'Conference', 'nyc-ext-8': 'Conference',
-  'nyc-ext-9': 'Conference', 'nyc-ext-10': 'Conference', 'nyc-ext-11': 'Conference', 'nyc-ext-12': 'Demo Day',
-  'sf-ext-1': 'Meetup / Talk', 'sf-ext-2': 'Demo Day', 'sf-ext-3': 'Conference', 'sf-ext-4': 'Conference',
-  'sf-ext-5': 'Conference', 'sf-ext-6': 'Conference', 'sf-ext-7': 'Conference', 'sf-ext-8': 'Conference',
-  'sf-ext-9': 'Conference', 'sf-ext-10': 'Conference',
+  'nyc-rob-1': 'Meetup / Talk', 'nyc-rob-2': 'Meetup / Talk', 'nyc-rob-3': 'Meetup / Talk', 'nyc-rob-4': 'Conference',
+  'nyc-rob-5': 'Conference', 'nyc-rob-6': 'Meetup / Talk',
+  'sf-rob-1': 'Conference', 'sf-rob-2': 'Meetup / Talk', 'sf-rob-3': 'Conference', 'sf-rob-4': 'Conference',
+  'sf-rob-5': 'Conference', 'sf-rob-6': 'Conference', 'sf-rob-7': 'Conference', 'sf-rob-8': 'Meetup / Talk',
+  'sf-rob-9': 'Meetup / Talk',
+};
+
+// Rows from the Extend copy (developer and web conferences), replaced in fieldMarketingVersion 10.
+export const EXTEND_ROWS = {
+  events: /^(nyc|sf)-ext-\d+$/,
+  scorecard: /^sc-\d+$/,
+  social: ['soc-1', 'soc-2', 'soc-3'],
+  tasks: ['rt-1', 'rt-2', 'rt-3', 'rt-4', 'rt-5', 'rt-6', 'rt-7', 'rt-11'],
+  milestones: ['ms-github', 'ms-aie', 'ms-aidev'],
 };
 
 function idea(id, eventName, pitch, format, coHost, coHostIncentive, poc, budget, goal, targetAudience, companyName = '') {
@@ -140,20 +149,17 @@ function scored(id, conference, city, dates, expectedAttendees, estDevelopers, i
   return { id, conference, city, dates, expectedAttendees, estDevelopers, icpFit, estCost, expectedMeetings, sponsorshipTier, cfpDeadline: '', decision };
 }
 
-// Upcoming conferences from SF_NYC_Dev_and_Startup_Events_2026.xlsx (attendees and developers from the sheet).
+// Robotics and physical AI conferences in the SF Bay Area and NYC (same list as the events pages).
+// Attendees are from the organizers where published; ICP fit, cost, meetings, tier and decision are planning estimates.
 export const SCORECARD_ROWS = [
-  scored('sc-1', 'Next.js Conf 2026', 'San Francisco', 'Oct 22', '1,000', '850', '2', '2,500', '4', 'Attend only', 'No'),
-  scored('sc-2', 'GitHub Universe 2026', 'San Francisco', 'Oct 28–29', '4,000', '2,800', '4', '15,000', '25', 'Booth', 'Go'),
-  scored('sc-3', 'OWASP Global AppSec USA', 'San Francisco', 'Nov 2–6', '800', '600', '2', '3,000', '3', 'Attend only', 'No'),
-  scored('sc-4', 'AI Engineer Code Summit 2026', 'San Francisco', 'Nov 10–12', '1,500', '1,280', '5', '20,000', '40', 'Booth + talk', 'Go'),
-  scored('sc-6', 'QCon San Francisco 2026', 'San Francisco', 'Nov 16–18', '1,500', '1,280', '3', '6,000', '6', 'Attend only', 'No'),
-  scored('sc-7', 'Microsoft Ignite 2026', 'San Francisco', 'Nov 17–20', '15,000', '5,250', '3', '7,000', '8', 'Attend only', 'No'),
-  scored('sc-8', 'AI Native DevCon New York 2026', 'New York', 'Nov 2–4', '', '', '4', '4,000', '10', 'Attend only', 'Maybe'),
-  scored('sc-9', 'Open Source in Finance Forum New York', 'New York', 'Nov 4–5', '', '', '4', '3,000', '8', 'Attend only', 'Maybe'),
-  scored('sc-10', 'JSNation US 2026', 'Jersey City (NYC area)', 'Nov 16', '700', '670', '2', '2,000', '3', 'Attend only', 'No'),
-  scored('sc-11', 'AI Coding Summit NYC', 'New York', 'Nov 16–17', '', '', '3', '2,500', '6', 'Attend only', 'No'),
-  scored('sc-12', 'React Summit US 2026', 'Jersey City (NYC area)', 'Nov 17', '800', '760', '2', '2,000', '3', 'Attend only', 'No'),
-  scored('sc-13', 'AI Dev NYC 2026 (DeepLearning.AI)', 'New York', 'Nov 30 – Dec 1', '2,500', '2,250', '5', '12,000', '30', 'Booth', 'Go'),
+  scored('sc-r1', 'Humanoids Summit Silicon Valley 2026', 'San Mateo', 'Dec 1–2', '', '', '5', '15,000', '30', 'Booth', 'Go'),
+  scored('sc-r2', 'IEEE Humanoids 2026', 'Santa Clara', 'Dec 6–9', '1,200+', '', '5', '6,000', '15', 'Attend only', 'Go'),
+  scored('sc-r3', 'HRI 2027', 'Santa Clara', 'Mar 8–12, 2027', '', '', '3', '3,000', '5', 'Attend only', 'Maybe'),
+  scored('sc-r4', 'NVIDIA GTC 2027', 'San Jose', 'Mar 15–18, 2027', '', '', '5', '25,000', '40', 'Booth + talk', 'Go'),
+  scored('sc-r5', 'AUTONOMOUS 2027', 'San Francisco', 'Apr 13–14, 2027', '1,500+', '', '5', '12,000', '30', 'Booth', 'Go'),
+  scored('sc-r6', 'Physical AI Expo North America 2027', 'San Jose', 'Jun 16–17, 2027 (confirm)', '', '', '4', '8,000', '12', 'Attend only', 'Maybe'),
+  scored('sc-r7', 'Construction Robotics Summit 2027', 'New York', 'Apr 14, 2027 (confirm)', '', '', '3', '2,000', '5', 'Attend only', 'Maybe'),
+  scored('sc-r8', 'Agent Conference 2027 (Physical AI track)', 'New York', 'May 17–18, 2027', '', '', '2', '3,000', '4', 'Attend only', 'No'),
 ];
 
 // Owns all content: social teasers, swag, live clips and recap posts, at every event.
@@ -184,11 +190,11 @@ function social(id, eventName, date, postingPeriod, channels, teaser, teaserDate
 }
 
 export const SOCIAL_PLAN = [
-  social('soc-1', 'GitHub Universe 2026', 'Oct 28–29', 'Oct 21 – Oct 27', 'X, LinkedIn', 'Bring your messiest PDF to our booth: we parse it live in 60 seconds.', 'Oct 14 – Oct 21',
-    '60-second live parse clips; booth timelapse; founder dinner moments', 'Shruthi (Mecka), Andrew (personal)'),
-  social('soc-2', 'AI Engineer Code Summit 2026', 'Nov 10–12', 'Nov 3 – Nov 9', 'X, LinkedIn, YouTube', 'Talk announcement: document agents in production, plus a "drop a document" kiosk.', 'Oct 27 – Nov 3',
-    'Talk recording; kiosk reactions; build-session demos', 'Devin (Mecka), Harvey (speaker)'),
-  social('soc-3', 'AI Dev NYC 2026', 'Nov 30 – Dec 1', 'Nov 23 – Nov 29', 'X, LinkedIn', 'NYC builders: Mecka booth + happy hour by Chelsea Piers. RSVP on Luma.', 'Nov 16 – Nov 23',
+  social('soc-r1', 'Humanoids Summit Silicon Valley 2026', 'Dec 1–2', 'Nov 24 – Nov 30', 'X, LinkedIn', 'Put on a Mecka capture rig at our booth and see your own hand-pose data in under a minute.', 'Nov 17 – Nov 24',
+    'Capture-rig try-ons; human video next to the robot replay; founder dinner moments', 'Shruthi (Mecka), Andrew (personal)'),
+  social('soc-r2', 'NVIDIA GTC 2027', 'Mar 15–18, 2027', 'Mar 8 – Mar 14', 'X, LinkedIn, YouTube', 'Talk announcement: how egocentric human data trains robots, plus live EgoVerse demos.', 'Mar 1 – Mar 8',
+    'Talk recording; booth demo clips; partner shout-outs', 'Devin (Mecka), Harvey (speaker)'),
+  social('soc-r3', 'AUTONOMOUS 2027', 'Apr 13–14, 2027', 'Apr 6 – Apr 12', 'X, LinkedIn', 'SF robotics builders: record a task with us at Pier 27, then watch a robot learn it.', 'Mar 30 – Apr 6',
     'Booth demos; happy hour photos; one customer quote on video', 'Addison (Mecka), Jing (personal)'),
   social('soc-4', 'Raspberry Pi Night (NYC)', '', 'Week before the event', 'X, Instagram, LinkedIn', 'Three hours, forty Raspberry Pis, one hour of demos. And pie.', '1–2 weeks before the event',
     'Build timelapse; demo highlight reel; co-host shout-out with Betaworks', 'Sydney (Mecka), co-host account'),
@@ -213,24 +219,24 @@ function task(id, title, sectionId, teamId, assigneeId, startDate, endDate, stat
 }
 
 export const ROADMAP_TASKS = [
-  task('rt-1', 'GitHub Universe: booth kit + shipping', 'init-1', 'team-a', 'p1', '2026-10-14', '2026-10-21', 'In progress',
-    'Confirm booth vendor, ship the kit by Oct 21, order power and scanners.', 'Booth is ready on build day; nothing figured out on site.'),
-  task('rt-2', 'GitHub Universe: pre-book 25 meetings', 'init-1', 'team-a', 'p5', '2026-10-14', '2026-10-27', 'In progress',
-    'Outreach to Target Accounts with Interaction attending GitHub Universe.', 'Most conference meetings are booked before the doors open.'),
-  task('rt-3', 'GitHub Universe (Oct 28–29)', 'init-1', 'team-a', 'p9', '2026-10-28', '2026-10-29', 'Committed',
-    'Run the booth, demos, meeting block and founder dinner.', 'First conference of the plan; sets the cost-per-meeting baseline.', ['rt-1', 'rt-2']),
-  task('rt-4', 'AI Engineer Code Summit: talk + booth plan', 'init-1', 'team-b', 'p2', '2026-10-20', '2026-11-03', 'In progress',
-    'Submit the document-agents talk, finalize the kiosk booth, ship by Nov 3.', 'Highest ICP fit conference in SF.'),
-  task('rt-5', 'AI Engineer Code Summit (Nov 10–12)', 'init-1', 'team-b', 'p6', '2026-11-10', '2026-11-12', 'Ready',
-    'Booth, talk (if accepted), meetings and the evening build session.', '40 meetings target.', ['rt-4']),
-  task('rt-6', 'AI Dev NYC: booth + side event', 'init-1', 'team-c', 'p3', '2026-11-03', '2026-11-20', 'Backlog',
-    'Book the NYC booth vendor and the Chelsea Piers happy hour venue.', 'Home-city conference with high ICP fit.'),
-  task('rt-7', 'AI Dev NYC (Nov 30 – Dec 1)', 'init-1', 'team-c', 'p7', '2026-11-30', '2026-12-01', 'Backlog',
+  task('rt-1', 'Humanoids Summit: booth kit + capture rigs', 'init-1', 'team-a', 'p1', '2026-11-16', '2026-11-25', 'In progress',
+    'Confirm the booth vendor, ship the kit and two capture rigs by Nov 25, order power.', 'Booth is ready on build day; nothing figured out on site.'),
+  task('rt-2', 'Humanoids Summit: pre-book 30 meetings', 'init-1', 'team-a', 'p5', '2026-11-16', '2026-11-30', 'In progress',
+    'Outreach to Target Accounts with Interaction attending the Humanoids Summit.', 'Most conference meetings are booked before the doors open.'),
+  task('rt-3', 'Humanoids Summit Silicon Valley (Dec 1–2)', 'init-1', 'team-a', 'p9', '2026-12-01', '2026-12-02', 'Committed',
+    'Run the booth, capture-rig demos, meeting block and founder dinner.', 'First conference of the plan; sets the cost-per-meeting baseline.', ['rt-1', 'rt-2']),
+  task('rt-4', 'NVIDIA GTC: talk submission + booth plan', 'init-1', 'team-b', 'p2', '2026-12-01', '2027-01-15', 'Ready',
+    'Submit the egocentric-data talk, choose a booth or a partner-pavilion spot, and lock the budget.', 'Highest ICP fit conference; NVIDIA is an investor.'),
+  task('rt-5', 'NVIDIA GTC 2027 (Mar 15–18)', 'init-1', 'team-b', 'p6', '2027-03-15', '2027-03-18', 'Backlog',
+    'Booth, talk (if accepted), meetings and an evening event.', '40 meetings target.', ['rt-4']),
+  task('rt-6', 'AUTONOMOUS: booth + side event', 'init-1', 'team-c', 'p3', '2027-02-15', '2027-04-01', 'Backlog',
+    'Book the booth and an SF happy hour near Pier 27.', 'Robotics-only audience in San Francisco.'),
+  task('rt-7', 'AUTONOMOUS 2027 (Apr 13–14)', 'init-1', 'team-c', 'p7', '2027-04-13', '2027-04-14', 'Backlog',
     'Booth, meetings, side event.', '30 meetings target.', ['rt-6']),
   task('rt-8', 'Raspberry Pi Night with Betaworks', 'init-2', 'team-b', 'p10', '2026-10-27', '2026-11-14', 'Ready',
     'Lock date and venue with Betaworks, order 40 Pis, open Luma.', 'Builder audience in NYC; strong content moment.'),
-  task('rt-11', 'Teaser + recap posts for GitHub Universe', 'init-3', 'team-c', 'p2', '2026-10-21', '2026-10-31', 'In progress',
-    'Teaser Oct 21, live clips during, recap Oct 31.', 'Turns one booth into reach beyond the hall.'),
+  task('rt-11', 'Teaser + recap posts for the Humanoids Summit', 'init-3', 'team-c', 'p2', '2026-11-17', '2026-12-05', 'In progress',
+    'Teaser Nov 17–24, live clips during, recap Dec 4.', 'Turns one booth into reach beyond the hall.'),
   task('rt-12', 'Event recap template + posting cadence', 'init-3', 'team-c', 'p2', '2026-10-20', '2026-10-30', 'Ready',
     'Reusable recap post, clip checklist, and who posts what.', 'Every event gets posted the same way.'),
   task('rt-13', 'Pitch top 10 co-hosts', 'init-4', 'team-d', 'p4', '2026-10-20', '2026-11-06', 'In progress',
@@ -240,9 +246,9 @@ export const ROADMAP_TASKS = [
 ];
 
 export const ROADMAP_MILESTONES = [
-  { id: 'ms-github', date: '2026-10-28', title: 'GitHub Universe', teamId: 'team-a' },
-  { id: 'ms-aie', date: '2026-11-10', title: 'AI Engineer Code Summit', teamId: 'team-b' },
-  { id: 'ms-aidev', date: '2026-11-30', title: 'AI Dev NYC', teamId: 'team-c' },
+  { id: 'ms-humanoids', date: '2026-12-01', title: 'Humanoids Summit Silicon Valley', teamId: 'team-a' },
+  { id: 'ms-gtc', date: '2027-03-15', title: 'NVIDIA GTC', teamId: 'team-b' },
+  { id: 'ms-autonomous', date: '2027-04-13', title: 'AUTONOMOUS', teamId: 'team-c' },
 ];
 
 const kr = (id, title, target, deadline, assigneeIds) => ({ id, title, current: 0, target, deadline, assigneeIds });
@@ -257,7 +263,7 @@ export const ROADMAP_OKRS = [
   },
   {
     id: 'okr-1', objective: 'Run conferences that pay back', teamId: 'team-a',
-    keyResults: [kr('kr-1-1', 'Meetings booked at the three planned conferences', 95, '2026-12-01', ['p1', 'p5'])],
+    keyResults: [kr('kr-1-1', 'Meetings booked at the three planned conferences', 95, '2027-04-14', ['p1', 'p5'])],
   },
   {
     id: 'okr-2', objective: 'Activate the startup community in NYC and SF', teamId: 'team-b',
