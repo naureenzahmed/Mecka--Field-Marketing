@@ -40,22 +40,19 @@ a { color: inherit; }
 
 /* Header */
 #app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 20px 0;
   background: #ffffff;
   position: sticky;
   top: 0;
   z-index: 20;
 }
 
-.header-left {
+.header-top {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
 }
 
 .wordmark {
@@ -66,20 +63,6 @@ a { color: inherit; }
 /* Mecka logo (mark + wordmark) at the far left of the header */
 .wordmark img { height: 24px; width: auto; display: block; flex-shrink: 0; }
 @media (max-width: 640px) { .wordmark img { height: 18px; } }
-
-.nav-tabs { display: flex; gap: 4px; }
-.nav-tab {
-  padding: 6px 14px;
-  border-radius: 9999px;
-  color: var(--text-dim);
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: 500;
-  border: none;
-  background: transparent;
-}
-.nav-tab:hover { color: var(--text); background: var(--bg-raised); }
-.nav-tab.active { color: var(--text); background: var(--bg-raised-2); }
 
 .header-goal {
   display: flex;
@@ -103,7 +86,7 @@ a { color: inherit; }
 
 /* Page container */
 #app-page { padding: 20px; max-width: 1500px; margin: 0 auto; }
-#app-page [id] { scroll-margin-top: 76px; }
+#app-page [id] { scroll-margin-top: 120px; }
 
 .page-title { font-size: 20px; font-weight: 700; margin: 4px 0 20px; text-transform: uppercase; letter-spacing: 0.02em; }
 .section-label {
@@ -543,11 +526,6 @@ a.header-goal { color: inherit; text-decoration: none; }
 .header-goal.active { background: var(--bg-raised); }
 .goal-banner .goal-icon img { width: 26px; height: 26px; }
 
-/* Keep nav tabs on one line; scroll sideways when the header is narrow */
-.header-left { min-width: 0; }
-.nav-tabs { overflow-x: auto; scrollbar-width: none; }
-.nav-tab { white-space: nowrap; }
-.header-goal { flex-shrink: 0; }
 
 /* Documentation: social links beside a row title (Inspiration) */
 .doc-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -572,12 +550,78 @@ input.entity-city { width: 210px; }
 .cell-computed { display: inline-block; min-width: 60px; padding: 6px 8px; font-weight: 600; color: var(--text); }
 .section-note { font-size: 12px; color: var(--text-dim); margin: -2px 0 10px; line-height: 1.5; }
 
-/* Narrower windows: tabs wrap onto a second line instead of scrolling out of sight */
-@media (max-width: 1150px) {
-  #app-header { flex-wrap: wrap; row-gap: 8px; }
-  .header-left { flex-wrap: wrap; row-gap: 6px; }
-  .nav-tabs { flex-wrap: wrap; overflow-x: visible; }
-}
 
 /* Mecka headings use Schibsted Grotesk, like mecka.ai */
 h1, h2, h3, .page-title { font-family: 'Schibsted Grotesk', 'Inter', sans-serif; letter-spacing: -0.02em; }
+
+/* ---------- Folder tabs ----------
+   Each page is a folder tab sitting on the header's bottom line. Closed tabs are a shade darker
+   and overlap slightly, like folders in a drawer; the open tab is the page's own color and has no
+   bottom edge, so it reads as the front folder opening onto the page below. */
+.folder-tabs {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+.folder-tabs::-webkit-scrollbar { display: none; }
+.folder-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  margin-right: -6px;
+  padding: 8px 18px 7px;
+  background: var(--bg-raised-2);
+  border: 1px solid var(--border);
+  border-radius: 10px 10px 0 0;
+  color: var(--text-dim);
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: inset 0 -4px 6px -4px rgba(25, 20, 13, 0.12);
+  transition: background-color 0.15s, color 0.15s, padding 0.15s;
+}
+.folder-tab:last-child { margin-right: 0; }
+.folder-tab .tab-icon { width: 14px; height: 14px; flex-shrink: 0; color: var(--text-faint); }
+.folder-tab:hover { background: #f3eee5; color: var(--text); z-index: 1; }
+.folder-tab:hover .tab-icon { color: var(--text-dim); }
+.folder-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; z-index: 3; }
+.folder-tab.active {
+  z-index: 2;
+  padding-top: 11px;
+  background: var(--bg);
+  border-bottom-color: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: none;
+}
+/* Mecka-orange edge along the top of the open folder */
+.folder-tab.active::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 10px; right: 10px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--accent);
+}
+.folder-tab.active .tab-icon { color: var(--accent); }
+@media (max-width: 640px) {
+  #app-header { padding: 8px 12px 0; }
+  .folder-tab { padding: 7px 12px 6px; font-size: 13px; }
+  .folder-tab.active { padding-top: 9px; }
+}
+
+/* ---------- Home: About and Why I Built This ---------- */
+.home-about { margin-bottom: 14px; }
+.home-about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 900px) { .home-about-grid { grid-template-columns: 1fr; } }
+.home-sub-title { font-size: 13px; font-weight: 600; margin-top: 8px; }
+.home-about .notes-box { min-height: 110px; resize: none; overflow: hidden; line-height: 1.55; }
+.cover-notes {
+  min-height: 0; max-height: 96px; overflow-y: auto; margin: 0 0 10px; padding: 8px 10px;
+  font-size: 12px; field-sizing: content;
+}

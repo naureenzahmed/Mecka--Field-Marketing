@@ -1,6 +1,7 @@
 import { getData, commit } from './store.js';
 import { LEAD_FIELDS } from './seed.js';
 import { EXTERNAL_EVENT_FIELDS, EVENT_FORMATS, SOCIAL_FIELDS } from './fieldMarketing.js';
+import { startNotesSync } from './notesBox.js';
 import { renderCover } from './pages/cover.js';
 import { renderDocumentation } from './pages/documentation.js';
 import { renderTableSectionsPage } from './pages/tableSections.js';
@@ -8,6 +9,9 @@ import { renderExternalConferences } from './pages/externalConferences.js';
 import { renderRoadmap } from './pages/roadmap.js';
 import { renderPartnerships } from './pages/partnerships.js';
 import { renderExport } from './pages/exportData.js';
+
+const HOUSE_ICON = '<svg class="tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.2 10 3.5l7 5.7"/><path d="M5 8v8.5h3.8v-4.6h2.4v4.6H15V8"/></svg>';
+const FOLDER_ICON = '<svg class="tab-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.5 3.5A1.5 1.5 0 0 1 3 2h3.2c.4 0 .78.16 1.06.44L8.4 3.6H13A1.5 1.5 0 0 1 14.5 5.1V12.5A1.5 1.5 0 0 1 13 14H3a1.5 1.5 0 0 1-1.5-1.5v-9Z"/></svg>';
 
 // Events pages split every section by event format.
 const BY_FORMAT = { key: 'format', groups: EVENT_FORMATS };
@@ -70,25 +74,25 @@ function renderHeader(route) {
   const header = document.getElementById('app-header');
   const pct = data.companyGoal.target ? Math.round((data.companyGoal.current / data.companyGoal.target) * 100) : 0;
 
+  // Top row: logo and the target. Below it, one folder tab per page; the open page's tab joins the page.
   header.innerHTML = `
-    <div class="header-left">
-      <div class="wordmark">
-        <img src="assets/mecka-logo.svg" alt="Mecka" />
-      </div>
-      <nav class="nav-tabs">
-        ${Object.entries(PAGES).filter(([, p]) => !p.hidden).map(([key, p]) => `
-          <a class="nav-tab ${key === route ? 'active' : ''}" href="#/${key}">${p.label}</a>
-        `).join('')}
-      </nav>
+    <div class="header-top">
+      <a class="wordmark" href="#/home" title="Home"><img src="assets/mecka-logo.svg" alt="Mecka" /></a>
+      <a class="header-goal ${route === 'roadmap' ? 'active' : ''}" id="header-goal" href="#/roadmap" title="Open roadmap">
+        <div>
+          <div class="goal-sub">${escapeAttr(data.companyGoal.title)}</div>
+          <div class="goal-value">${data.companyGoal.current}${data.companyGoal.unit} <span class="goal-sub">/ ${data.companyGoal.target}${data.companyGoal.unit}</span></div>
+        </div>
+        <span class="pill">${pct}%</span>
+      </a>
     </div>
-    <a class="header-goal ${route === 'roadmap' ? 'active' : ''}" id="header-goal" href="#/roadmap" title="Open roadmap">
-      <div>
-        <div class="goal-sub">${escapeAttr(data.companyGoal.title)}</div>
-        <div class="goal-value">${data.companyGoal.current}${data.companyGoal.unit} <span class="goal-sub">/ ${data.companyGoal.target}${data.companyGoal.unit}</span></div>
-      </div>
-      <span class="pill">${pct}%</span>
-    </a>
+    <nav class="folder-tabs" aria-label="Pages">
+      ${Object.entries(PAGES).filter(([, p]) => !p.hidden).map(([key, p]) => `
+        <a class="folder-tab ${key === route ? 'active' : ''}" href="#/${key}" ${key === route ? 'aria-current="page"' : ''}>${key === 'home' ? HOUSE_ICON : FOLDER_ICON}<span>${p.label}</span></a>
+      `).join('')}
+    </nav>
   `;
+  header.querySelector('.folder-tab.active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 /* Edit the header target; used from the roadmap page. */
@@ -112,5 +116,6 @@ function escapeAttr(s) {
 window.addEventListener('hashchange', rerender);
 window.addEventListener('DOMContentLoaded', () => {
   if (!location.hash) location.hash = '#/home';
+  startNotesSync();
   rerender();
 });
